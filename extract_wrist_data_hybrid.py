@@ -172,7 +172,7 @@ if __name__ == "__main__":
     # —— Hard-coded parameters: change these as needed! —— #
     data_dir               = "/kaggle/input/wesaddataset/WESAD"
     output_dir             = "/kaggle/working/WESAD/cleaned_wrist_data_700Hz"
-    save_separate          = False    # keep ACC/BVP/EDA/TEMP files
+    save_separate          = True   # keep ACC/BVP/EDA/TEMP files
     save_multi             = True    # keep combined multi-channel file
     target_sampling_rate   = 700     # Hz
     # ———————————————————————————————————————————————— #
