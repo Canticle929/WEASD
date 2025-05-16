@@ -43,3 +43,18 @@ ENV/
 
 # Logs
 *.log 
+
+# Cursor IDE specific
+.cursor/
+
+# General Log Folders (if not covered by *.log)
+log/
+
+# Temporary files
+memory.txt
+*.html
+
+# Local Archive
+_script_archive/
+# Other
+.DS_Store 

@@ -101,7 +101,7 @@ def window_subject_data(subject_dir, output_dir, window_size=5, step_size=2.5):
                     sampling_rate = float(line.split(":")[1].strip().split(" ")[0])
                     break
     except:
-        print(f"无法读取采样率，使用默认值 700 Hz")
+        print(f"Could not read sampling rate from info.txt, using default 700 Hz")
         sampling_rate = 700  # default sampling rate for chest device of WESAD
     
     # check the consistency of data length
@@ -318,7 +318,7 @@ if __name__ == "__main__":
     print("WESAD data windowing processing")
     print("="*80)
     
-    # 窗口化处理
+    # windowing processing
     window_all_subjects(input_dir, output_dir, window_size, step_size)
     
     print("\nWindowing processing completed!")

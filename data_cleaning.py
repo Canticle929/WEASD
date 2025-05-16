@@ -73,7 +73,7 @@ def clean_wesad_data(data, target_labels=[1, 2]):
             'chest_Resp': np.array([]),
             'labels': np.array([]),
             'label_names': {1: 'baseline', 2: 'stress'},
-            'sampling_rate': data['sampling_rate']
+            'sampling_rate': {'chest': 700}
         }
     
     # Extract data corresponding to target labels
@@ -97,13 +97,16 @@ def clean_wesad_data(data, target_labels=[1, 2]):
         count = np.sum(clean_labels == label)
         print(f"Label {label} ({label_names[label]}): {count} samples")
     
+    # Define the known sampling rate for chest signals
+    chest_sampling_rate = 700 # Hz, according to WESAD readme for RespiBAN
+
     return {
         'chest_ECG': clean_ECG,
         'chest_EDA': clean_EDA,
         'chest_Resp': clean_Resp,
         'labels': clean_labels,
         'label_names': label_names,
-        'sampling_rate': data['sampling_rate']
+        'sampling_rate': {'chest': chest_sampling_rate}
     }
 
 def process_subject(subject_path, output_dir, target_labels=[1, 2]):
@@ -415,7 +418,7 @@ def create_dataset_summary(output_dir):
 
 if __name__ == "__main__":
     # Configure parameters
-    data_dir = "/Volumes/xcy/TeamProject/WESAD/raw"  # WESAD original data directory
+    data_dir = "/Volumes/xcy/TeamProject/WESAD"  # WESAD original data directory (parent of S* folders)
     output_dir = "/Volumes/xcy/TeamProject/WESAD/cleaned_data"  # Output directory for cleaned data
     target_labels = [1, 2]  # Labels to retain: 1=baseline, 2=stress
     

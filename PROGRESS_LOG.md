@@ -52,21 +52,62 @@
 
 ## Phase 3: Model Development / 阶段三：模型开发
 
-*   **Feature Engineering / 特征工程:**
-    *   Created `feature_extraction.py` to extract statistical features from windowed signals.
-        *   创建了 `feature_extraction.py` 脚本用于从窗口化信号中提取统计特征。
-    *   Implemented extraction of 17 time-domain features for each signal type (ECG, EDA, Resp), including basic statistics (mean, std, range, etc.), shape features (skewness, kurtosis), variability measures (RMS, zero-crossings), and rate-of-change metrics.
-        *   为每种信号类型（ECG, EDA, Resp）实现了 17 种时域特征的提取，包括基础统计特征（均值、标准差、范围等）、形态特征（偏度、峰度）、变异性指标（均方根、过零点数）和变化率指标。
+*   **Feature Engineering (Chest Data) / 特征工程 (胸部数据):**
+    *   Created `feature_extraction.py` to extract statistical features from windowed chest signals (ECG, EDA, Resp, Temp).
+        *   创建了 `feature_extraction.py` 脚本用于从窗口化的胸部信号（ECG、EDA、Resp、Temp）中提取统计特征。
+    *   Implemented extraction of time-domain features.
+        *   实现了时域特征的提取。
+    *   Feature dataset (`feature_dataset.csv`) saved in `/Volumes/xcy/TeamProject/WESAD/features/`.
+        *   特征数据集 (`feature_dataset.csv`) 保存在 `/Volumes/xcy/TeamProject/WESAD/features/` 目录中。
     *   Added visualization capabilities to examine feature distributions and correlations.
         *   添加了可视化功能，用于检查特征分布和相关性。
 
+*   **Initial Model Training and Evaluation (on Chest Features) / 初步模型训练与评估 (基于胸部特征):**
+    *   Developed `train_model_SVM.py` and `train_model_RF.py` for model training.
+        *   开发了 `train_model_SVM.py` 和 `train_model_RF.py` 脚本用于模型训练。
+    *   **Support Vector Machine (SVM) Results:**
+        *   Accuracy: 0.83
+        *   Baseline (Label 1) F1-score: 0.87 (Precision: 0.83, Recall: 0.92)
+        *   Stress (Label 2) F1-score: 0.74 (Precision: 0.82, Recall: 0.67)
+        *   Model saved as `WESAD/SVM/svm_model.pkl`.
+        *   **SVM 模型结果:**
+            *   准确率: 0.83
+            *   基线 (标签 1) F1分数: 0.87 (精确率: 0.83, 召回率: 0.92)
+            *   压力 (标签 2) F1分数: 0.74 (精确率: 0.82, 召回率: 0.67)
+            *   模型保存为 `WESAD/SVM/svm_model.pkl`。
+    *   **Random Forest (RF) Results:**
+        *   Accuracy: 0.80
+        *   Baseline (Label 1) F1-score: 0.86 (Precision: 0.77, Recall: 0.98)
+        *   Stress (Label 2) F1-score: 0.64 (Precision: 0.94, Recall: 0.49)
+        *   Model saved as `WESAD/RF/random_forest_model.pkl`.
+        *   **随机森林 (RF) 模型结果:**
+            *   准确率: 0.80
+            *   基线 (标签 1) F1分数: 0.86 (精确率: 0.77, 召回率: 0.98)
+            *   压力 (标签 2) F1分数: 0.64 (精确率: 0.94, 召回率: 0.49)
+            *   模型保存为 `WESAD/RF/random_forest_model.pkl`。
+
 ## Next Steps / 下一步
 
-*   **Feature Engineering for Wrist Data:** Extend feature extraction to the wrist modalities (ACC, BVP, EDA, TEMP), considering their unique characteristics and potentially adding frequency-domain features.
-    *   **腕部数据特征工程:** 将特征提取扩展到腕部模态（ACC、BVP、EDA、TEMP），考虑它们的独特特性，并可能添加频域特征。
+*   **Feature Engineering for Wrist Data / 腕部数据特征工程:**
+    *   Extend feature extraction processes to the windowed wrist data (ACC, BVP, EDA, TEMP).
+        *   将特征提取流程扩展到窗口化的腕部数据（ACC、BVP、EDA、TEMP）。
+    *   Consider unique characteristics of wrist signals and explore relevant time-domain and frequency-domain features.
+        *   考虑腕部信号的独有特性，探索相关的时域及频域特征。
 
-*   **Model Development - Model Training:** Create machine learning models to classify baseline vs. stress states using the extracted features from both chest and wrist data. Consider a variety of classifiers (e.g., Logistic Regression, Random Forest, SVM).
-    *   **模型开发 - 模型训练:** 使用从胸部和腕部数据提取的特征创建机器学习模型，用于分类基线与压力状态。考虑多种分类器（如逻辑回归、随机森林、SVM）。
+*   **Model Development - Combined Features & Binary Classification / 模型开发 - 组合特征与二分类:**
+    *   Combine features extracted from both chest and wrist data.
+        *   合并从胸部和腕部数据中提取的特征。
+    *   Train and evaluate machine learning models (e.g., Logistic Regression, Random Forest, SVM) for the binary classification task (baseline vs. stress) using the combined feature set.
+        *   使用组合特征集为二分类任务（基线 vs. 压力）训练和评估机器学习模型（例如逻辑回归、随机森林、SVM）。
 
-*   **Model Development - Evaluation:** Implement cross-validation and performance metrics to assess model quality.
-    *   **模型开发 - 评估:** 实现交叉验证和性能指标，用于评估模型质量。 
+*   **Model Development - 3-Class Classification / 模型开发 - 三分类:**
+    *   Adapt data processing pipeline (cleaning, windowing, feature extraction) to include an additional class, such as 'amusement' (label 3) or 'meditation'(label 4), for a 3-class classification problem (e.g., baseline vs. stress vs. amusement or meditation).
+        *   调整数据处理流程（清理、窗口化、特征提取），以包含额外的类别，例如"amusement"（标签3）或"meditation"（标签4），用于三分类问题（例如，基线 vs. 压力 vs. amusement 或 meditation）。
+    *   Train and evaluate multi-class classification models on the 3-class feature set.
+        *   在三分类特征集上训练和评估多分类模型。
+
+*   **Model Development - Evaluation / 模型开发 - 评估:**
+    *   Implement robust cross-validation strategies for all modeling tasks.
+        *   为所有建模任务实施稳健的交叉验证策略。
+    *   Utilize a comprehensive set of performance metrics (accuracy, precision, recall, F1-score, confusion matrix) to assess and compare model quality.
+        *   使用一套全面的性能指标（准确率、精确率、召回率、F1分数、混淆矩阵）来评估和比较模型质量。 
